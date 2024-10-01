@@ -27,7 +27,7 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
                             objectFit: "cover"
                         }}
                         fill
-                        className="rounded-2xl" />
+                        className="rounded-2xl pt-1" />
                 </div>
 
                 <div className="px-2 pb-3">
