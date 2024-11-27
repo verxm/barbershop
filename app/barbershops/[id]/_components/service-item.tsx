@@ -3,7 +3,7 @@
 import { Button } from "@/app/_components/ui/button";
 import { Calendar } from "@/app/_components/ui/calendar";
 import { Card, CardContent } from "@/app/_components/ui/card";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/app/_components/ui/sheet";
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/app/_components/ui/sheet";
 import { Barbershop, Service } from "@prisma/client";
 import { ptBR } from "date-fns/locale";
 import { signIn } from "next-auth/react";
@@ -19,7 +19,7 @@ interface ServiceItemProps {
 }
 
 const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps) => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
+    const [date, setDate] = useState<Date | undefined>(undefined);
     const [hour, setHour] = useState<string | undefined>();
 
     const handleDateClick = (date: Date | undefined) => {
@@ -166,10 +166,13 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
                                                         {barbershop.name}
                                                     </h4>
                                                 </div>
-
                                             </CardContent>
                                         </Card>
                                     </div>
+
+                                    <SheetFooter className="px-5">
+                                        <Button disabled={!hour || !date}>Confirmar reserva</Button>
+                                    </SheetFooter>
                                 </SheetContent>
                             </Sheet>
                         </div>
