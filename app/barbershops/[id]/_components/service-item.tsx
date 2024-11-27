@@ -35,8 +35,6 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
         if (!isAuthenticated) {
             return signIn("google");
         }
-
-        // TODO: abrir modal de agendamento
     }
 
     const timeList = useMemo(() => {
