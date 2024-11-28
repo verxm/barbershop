@@ -41,7 +41,7 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
         console.log(dayBookingsState);
 
         const refreshAvailableHours = async () => {
-            const dayBookings = await getDayBookings(date);
+            const dayBookings = await getDayBookings(barbershop.id, date);
 
             setDayBookings(dayBookings);
         };
