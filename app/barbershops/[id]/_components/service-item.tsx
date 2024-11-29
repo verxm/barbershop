@@ -129,20 +129,20 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
             const timeHour = extractHour(timeAsText);
             const timeMinutes = extractMinutes(timeAsText);
 
+            const hasBookingToHourAndMinute = (timeHour: number, timeMinutes: number) => {
+                const booking = dayBookingsState.find((booking) => {
+                    const bookingHour = booking.date.getHours();
+                    const bookingMinutes = booking.date.getMinutes();
+        
+                    return bookingHour === timeHour && bookingMinutes === timeMinutes;
+                });
+        
+                return !booking;
+            }
+
             return hasBookingToHourAndMinute(timeHour, timeMinutes);
         });
     }, [date, dayBookingsState]);
-
-    const hasBookingToHourAndMinute = (timeHour: number, timeMinutes: number) => {
-        const booking = dayBookingsState.find((booking) => {
-            const bookingHour = booking.date.getHours();
-            const bookingMinutes = booking.date.getMinutes();
-
-            return bookingHour === timeHour && bookingMinutes === timeMinutes;
-        });
-
-        return !booking;
-    }
 
     console.log(timeList);
 
