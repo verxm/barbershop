@@ -31,7 +31,18 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
     const [hour, setHour] = useState<string | undefined>();
     const [submitIsLoading, setSubmitIsLoading] = useState(false);
     const [sheetIsOpen, setSheetIsOpen] = useState(false);
-    const [dayBookingsState, setDayBookings] = useState<Booking[]>([])
+    const [dayBookingsState, setDayBookings] = useState<Booking[]>([]);
+
+    const HOUR_INDEX_POSITION_IN_TIME_AS_TEXT = 0;
+    const MINUTES_INDEX_POSITION_IN_TIME_AS_TEXT = 1;
+
+    const extractHour = (timeAsText: string) => {
+        return Number(timeAsText.split(':')[HOUR_INDEX_POSITION_IN_TIME_AS_TEXT]);
+    }
+
+    const extractMinutes = (timeAsText: string) => {
+        return Number(timeAsText?.split(':')[MINUTES_INDEX_POSITION_IN_TIME_AS_TEXT]);
+    }
 
     useEffect(() => {
         if (!date) {
@@ -72,8 +83,8 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
                 return;
             }
 
-            const dateHour = Number(hour.split(':')[0]);
-            const dateMinutes = Number(hour.split(':')[1]);
+            const dateHour = extractHour(hour);
+            const dateMinutes = extractMinutes(hour);
             const bookingDate = setMinutes(
                 setHours(date, dateHour),
                 dateMinutes);
@@ -114,10 +125,9 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
             return [];
         }
 
-        return generateDayTimeList(date).filter(time => {
-            // TODO: eliminar duplicidade
-            const timeHour = Number(time.split(':')[0]);
-            const timeMinutes = Number(time.split(':')[1]);
+        return generateDayTimeList(date).filter(timeAsText => {
+            const timeHour = extractHour(timeAsText);
+            const timeMinutes = extractMinutes(timeAsText);
 
             const booking = dayBookingsState.find((booking) => {
                 const bookingHour = booking.date.getHours();
